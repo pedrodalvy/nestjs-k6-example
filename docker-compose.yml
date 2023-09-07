@@ -29,3 +29,11 @@ services:
       - '${PORT:-3000}:3000'
     networks:
       - nestjs_k6
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "128M"
