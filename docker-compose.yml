@@ -27,12 +27,34 @@ services:
         BUILD_STAGE: production
     ports:
       - '${PORT:-3000}:3000'
+    env_file:
+      - .env
     networks:
       - nestjs_k6
     deploy:
       resources:
         limits:
           cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "128M"
+
+  k6:
+    container_name: k6
+    image: grafana/k6:0.46.0
+    command: "${K6_CMD}"
+    env_file:
+      - .env
+    working_dir: /k6
+    volumes:
+      - ./k6:/k6
+    networks:
+      - nestjs_k6
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
           memory: "512M"
         reservations:
           cpus: "0.25"
