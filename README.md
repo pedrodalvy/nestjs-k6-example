@@ -1,73 +1,91 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# NestJS and K6 with Docker
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is designed for testing NestJS and K6 within a Docker environment.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+1. [Introduction](#introduction)
+2. [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+3. [Running the Application](#running-the-application)
+    - [Production Mode](#production-mode)
+    - [Local Mode](#local-mode)
+4. [Running Tests with K6](#running-tests-with-k6)
+    - [Running K6 Tests](#running-k6-tests)
+    - [K6 Documentation](#k6-documentation)
+5. [Directory Structure](#directory-structure)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 1. Introduction <a name="introduction"></a>
 
-## Installation
+This repository focuses on the testing of NestJS and K6 within a Dockerized environment. 
+The Docker Compose configuration has been optimized to facilitate precise local testing while respecting specified resource limitations.
+Please note that this doesn't guarantee consistent system-level resource allocation.
+
+## 2. Getting Started <a name="getting-started"></a>
+
+### Prerequisites <a name="prerequisites"></a>
+
+Before starting, make sure you have the following tools and dependencies installed:
+
+- [Docker](https://docs.docker.com) - To containerize and manage your application.
+- [Make](https://www.gnu.org/software/make) - For convenient project management using the Makefile.
+
+### Installation <a name="installation"></a>
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/pedrodalvy/nestjs-k6-example.git
+   ```
+
+2. Change to the project directory:
+
+   ```bash
+   cd nestjs-k6-example
+   ```
+
+## 3. Running the Application <a name="running-the-application"></a>
+
+### Production Mode <a name="production-mode"></a>
+
+To run the NestJS application in production mode, run:
 
 ```bash
-$ npm install
+make app_prod
+# OR
+docker-compose up -d app_prod
 ```
 
-## Running the app
+### Local Mode <a name="local-mode"></a>
+
+To run the NestJS application locally for development purposes, run:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+make app_local
+# OR
+docker-compose up -d app_local
 ```
 
-## Test
+## 4. Running Tests with K6 <a name="running-tests-with-k6"></a>
+
+### Running K6 Tests <a name="running-k6-tests"></a>
+
+You can run K6 tests to evaluate the performance and scalability of your NestJS application. Execute the following command:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+make k6 run scripts/hello-world.k6.js
+# OR
+docker compose run k6 run scripts/hello-world.k6.js
 ```
 
-## Support
+### K6 Documentation <a name="k6-documentation"></a>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+For more details on how to create and customize K6 tests, refer to the [K6 documentation](https://k6.io/docs/).
 
-## Stay in touch
+## 5. Directory Structure <a name="directory-structure"></a>
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+The project directory structure is organized as follows:
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+- `k6/scripts`: Contains K6 test scripts.
+- Add more directories and files as needed to structure your NestJS application.
